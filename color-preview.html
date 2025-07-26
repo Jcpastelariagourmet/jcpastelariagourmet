@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JC Pastelaria Gourmet - Preview de Cores</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* Modo Claro */
+            --bg-primary: #FFC700;
+            --bg-gradient: #FFB300;
+            --text-primary: #000000;
+            --accent-dark: #753700;
+            --text-subtitle: #4D1F00;
+            --card-bg: #FDECE2;
+            --success: #28A745;
+            --danger: #DC3545;
+            
+            /* Modo Noturno */
+            --dark-bg-primary: #1A1A1A;
+            --dark-card-bg: #2D2D2D;
+            --dark-text-primary: #FFFFFF;
+            --dark-text-secondary: #B3B3B3;
+            --dark-yellow: #FFD700;
+            --dark-accent: #4A90E2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-gradient) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode {
+            background: var(--dark-bg-primary);
+            color: var(--dark-text-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid var(--card-bg);
+        }
+
+        .dark-mode .header {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-accent);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-primary);
+            font-size: 24px;
+        }
+
+        .dark-mode .logo-icon {
+            background: var(--dark-yellow);
+            color: var(--dark-bg-primary);
+        }
+
+        .logo-text h1 {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--accent-dark);
+        }
+
+        .dark-mode .logo-text h1 {
+            color: var(--dark-yellow);
+        }
+
+        .logo-text p {
+            font-size: 14px;
+            color: var(--text-subtitle);
+        }
+
+        .dark-mode .logo-text p {
+            color: var(--dark-text-secondary);
+        }
+
+        .theme-toggle {
+            background: var(--accent-dark);
+            color: var(--bg-primary);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .dark-mode .theme-toggle {
+            background: var(--dark-yellow);
+            color: var(--dark-bg-primary);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .dark-mode .card {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-accent);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .card h3 {
+            color: var(--text-subtitle);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .dark-mode .card h3 {
+            color: var(--dark-yellow);
+        }
+
+        .card p {
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .dark-mode .card p {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-primary {
+            background: var(--accent-dark);
+            color: var(--bg-primary);
+        }
+
+        .dark-mode .btn-primary {
+            background: var(--dark-yellow);
+            color: var(--dark-bg-primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Gamification Elements */
+        .points-display {
+            background: linear-gradient(45deg, var(--bg-primary), var(--bg-gradient));
+            color: var(--accent-dark);
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .dark-mode .points-display {
+            background: linear-gradient(45deg, var(--dark-yellow), var(--dark-accent));
+            color: var(--dark-bg-primary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--bg-gradient));
+            width: 65%;
+            transition: width 0.3s;
+        }
+
+        .dark-mode .progress-fill {
+            background: linear-gradient(90deg, var(--dark-accent), var(--dark-yellow));
+        }
+
+        /* Badge */
+        .badge {
+            background: var(--accent-dark);
+            color: var(--bg-primary);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .dark-mode .badge {
+            background: var(--dark-yellow);
+            color: var(--dark-bg-primary);
+        }
+
+        /* Color Palette Display */
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .color-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .color-primary { background: var(--bg-primary); color: var(--text-primary); }
+        .color-gradient { background: var(--bg-gradient); color: var(--text-primary); }
+        .color-accent { background: var(--accent-dark); color: var(--bg-primary); }
+        .color-subtitle { background: var(--text-subtitle); color: var(--bg-primary); }
+        .color-card { background: var(--card-bg); color: var(--text-primary); }
+        .color-success { background: var(--success); }
+        .color-danger { background: var(--danger); }
+
+        .dark-mode .color-primary { background: var(--dark-bg-primary); color: var(--dark-text-primary); }
+        .dark-mode .color-gradient { background: var(--dark-card-bg); color: var(--dark-text-primary); }
+        .dark-mode .color-accent { background: var(--dark-yellow); color: var(--dark-bg-primary); }
+        .dark-mode .color-subtitle { background: var(--dark-text-secondary); color: var(--dark-bg-primary); }
+        .dark-mode .color-card { background: var(--dark-accent); color: var(--dark-text-primary); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-cookie-bite"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>JC Pastelaria Gourmet</h1>
+                    <p>Sabores que conquistam</p>
+                </div>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i> Alternar Tema
+            </button>
+        </header>
+
+        <!-- Gamification Display -->
+        <div class="points-display">
+            <i class="fas fa-star"></i>
+            1,250 JC Points
+            <span class="badge">Nível Ouro</span>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <p style="text-align: center; margin-bottom: 30px;">350 pontos para o próximo nível!</p>
+
+        <!-- Cards Grid -->
+        <div class="cards-grid">
+            <div class="card">
+                <h3><i class="fas fa-shopping-cart"></i> Fazer Pedido</h3>
+                <p>Explore nosso cardápio com mais de 50 sabores de pastéis artesanais. Doces e salgados preparados na hora!</p>
+                <button class="btn btn-success">Ver Cardápio</button>
+                <button class="btn btn-primary">Favoritos</button>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-trophy"></i> Suas Conquistas</h3>
+                <p>Você já desbloqueou 8 conquistas! Continue pedindo para ganhar mais badges e benefícios exclusivos.</p>
+                <button class="btn btn-primary">Ver Conquistas</button>
+                <button class="btn btn-danger">Desafios</button>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-gift"></i> Recompensas</h3>
+                <p>Troque seus JC Points por pastéis grátis, descontos especiais e benefícios VIP. Você tem cupons disponíveis!</p>
+                <button class="btn btn-success">Resgatar</button>
+                <button class="btn btn-primary">Meus Cupons</button>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-user"></i> Meu Perfil</h3>
+                <p>Gerencie seus dados, endereços de entrega, preferências alimentares e configurações de notificação.</p>
+                <button class="btn btn-primary">Editar Perfil</button>
+                <button class="btn btn-danger">Sair</button>
+            </div>
+        </div>
+
+        <!-- Color Palette -->
+        <h2 style="text-align: center; margin: 40px 0 20px;">Paleta de Cores</h2>
+        <div class="color-palette">
+            <div class="color-item color-primary">#FFC700<br>Amarelo Principal</div>
+            <div class="color-item color-gradient">#FFB300<br>Gradiente</div>
+            <div class="color-item color-accent">#753700<br>Acentos</div>
+            <div class="color-item color-subtitle">#4D1F00<br>Subtítulos</div>
+            <div class="color-item color-card">#FDECE2<br>Cards</div>
+            <div class="color-item color-success">#28A745<br>Sucesso</div>
+            <div class="color-item color-danger">#DC3545<br>Alertas</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('.theme-toggle i');
+            const text = document.querySelector('.theme-toggle');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                icon.className = 'fas fa-sun';
+                text.innerHTML = '<i class="fas fa-sun"></i> Modo Claro';
+            } else {
+                icon.className = 'fas fa-moon';
+                text.innerHTML = '<i class="fas fa-moon"></i> Modo Escuro';
+            }
+        }
+
+        // Animação da barra de progresso
+        setTimeout(() => {
+            document.querySelector('.progress-fill').style.width = '75%';
+        }, 1000);
+    </script>
+</body>
+</html>
