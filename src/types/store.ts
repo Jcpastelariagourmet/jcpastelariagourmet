@@ -1,6 +1,6 @@
 // Zustand store types and interfaces
 import { User, Product, Order, Address, Notification, UserAchievement, UserChallenge, UserCoupon } from './database'
-import { CartItem, ProductFilters, OrderFilters } from './components'
+import { CartItem, OrderFilters } from './components'
 
 // Base store interface
 export interface BaseStore {
@@ -100,7 +100,7 @@ export interface AppliedCoupon {
 export interface ProductsState {
   products: Product[]
   categories: Category[]
-  filters: ProductFilters
+  filters: { categoryId?: string }
   searchQuery: string
   sortBy: string
   sortOrder: 'asc' | 'desc'
@@ -112,10 +112,10 @@ export interface ProductsState {
 }
 
 export interface ProductsActions {
-  fetchProducts: (filters?: ProductFilters) => Promise<void>
+  fetchProducts: (filters?: { categoryId?: string }) => Promise<void>
   fetchCategories: () => Promise<void>
   searchProducts: (query: string) => Promise<void>
-  setFilters: (filters: ProductFilters) => void
+  setFilters: (filters: { categoryId?: string }) => void
   setSorting: (sortBy: string, sortOrder: 'asc' | 'desc') => void
   loadMore: () => Promise<void>
   resetFilters: () => void

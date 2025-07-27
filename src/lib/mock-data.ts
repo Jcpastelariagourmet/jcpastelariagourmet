@@ -48,7 +48,106 @@ export const mockCategories: Category[] = [
   }
 ];
 
+// Mock customizations data - Sistema completo de complementos para pastéis salgados
+// Função para criar customizações para um produto específico
+const createCustomizationsForProduct = (productId: string) => [
+  // Sabores - Agora com controles de quantidade e limites
+  {
+    id: `custom-sabores-${productId}`,
+    product_id: productId,
+    name: 'Sabores',
+    type: 'multiple' as const,
+    required: false,
+    max_selections: 3, // Limite de 3 sabores diferentes
+    order_index: 1,
+    options: [
+      { id: `sabor-1-${productId}`, name: 'Tradicional', price_modifier: 0, is_available: true, order_index: 1, max_quantity: 2 },
+      { id: `sabor-2-${productId}`, name: 'Apimentado', price_modifier: 1.00, is_available: true, order_index: 2, max_quantity: 2 },
+      { id: `sabor-3-${productId}`, name: 'Com Cebola Caramelizada', price_modifier: 2.00, is_available: true, order_index: 3, max_quantity: 2 },
+      { id: `sabor-4-${productId}`, name: 'Defumado', price_modifier: 2.50, is_available: true, order_index: 4, max_quantity: 1 },
+      { id: `sabor-5-${productId}`, name: 'Com Ervas Finas', price_modifier: 1.50, is_available: true, order_index: 5, max_quantity: 2 }
+    ]
+  },
+  // Adicionais
+  {
+    id: `custom-adicionais-${productId}`,
+    product_id: productId,
+    name: 'Adicionais',
+    type: 'multiple' as const,
+    required: false,
+    max_selections: 5, // Limite de 5 adicionais diferentes
+    order_index: 2,
+    options: [
+      { id: `add-1-${productId}`, name: 'Queijo Extra', price_modifier: 2.50, is_available: true, order_index: 1, max_quantity: 3 },
+      { id: `add-2-${productId}`, name: 'Bacon', price_modifier: 3.00, is_available: true, order_index: 2, max_quantity: 2 },
+      { id: `add-3-${productId}`, name: 'Catupiry', price_modifier: 2.00, is_available: true, order_index: 3, max_quantity: 2 },
+      { id: `add-4-${productId}`, name: 'Ovo', price_modifier: 1.50, is_available: true, order_index: 4, max_quantity: 2 },
+      { id: `add-5-${productId}`, name: 'Azeitona', price_modifier: 1.00, is_available: true, order_index: 5, max_quantity: 1 },
+      { id: `add-6-${productId}`, name: 'Tomate', price_modifier: 0.50, is_available: true, order_index: 6, max_quantity: 2 },
+      { id: `add-7-${productId}`, name: 'Cebola Roxa', price_modifier: 0.50, is_available: true, order_index: 7, max_quantity: 1 }
+    ]
+  },
+  // Molhos
+  {
+    id: `custom-molhos-${productId}`,
+    product_id: productId,
+    name: 'Molhos',
+    type: 'multiple' as const,
+    required: false,
+    max_selections: 3, // Limite de 3 molhos diferentes
+    order_index: 3,
+    options: [
+      { id: `molho-1-${productId}`, name: 'Molho de Alho', price_modifier: 0, is_available: true, order_index: 1, max_quantity: 2 },
+      { id: `molho-2-${productId}`, name: 'Molho Picante', price_modifier: 0, is_available: true, order_index: 2, max_quantity: 2 },
+      { id: `molho-3-${productId}`, name: 'Molho Barbecue', price_modifier: 1.00, is_available: true, order_index: 3, max_quantity: 2 },
+      { id: `molho-4-${productId}`, name: 'Molho Especial da Casa', price_modifier: 1.50, is_available: true, order_index: 4, max_quantity: 1 },
+      { id: `molho-5-${productId}`, name: 'Molho Rosé', price_modifier: 1.00, is_available: true, order_index: 5, max_quantity: 2 },
+      { id: `molho-6-${productId}`, name: 'Molho Verde (Chimichurri)', price_modifier: 1.50, is_available: true, order_index: 6, max_quantity: 1 }
+    ]
+  }
+];
+
+// Customizações específicas para pastéis doces
+const createSweetCustomizationsForProduct = (productId: string) => [
+  // Complementos doces
+  {
+    id: `custom-complementos-${productId}`,
+    product_id: productId,
+    name: 'Complementos',
+    type: 'multiple' as const,
+    required: false,
+    max_selections: 3,
+    order_index: 1,
+    options: [
+      { id: `comp-1-${productId}`, name: 'Chantilly', price_modifier: 2.00, is_available: true, order_index: 1, max_quantity: 1 },
+      { id: `comp-2-${productId}`, name: 'Sorvete de Baunilha', price_modifier: 3.50, is_available: true, order_index: 2, max_quantity: 1 },
+      { id: `comp-3-${productId}`, name: 'Calda de Chocolate', price_modifier: 1.50, is_available: true, order_index: 3, max_quantity: 2 },
+      { id: `comp-4-${productId}`, name: 'Açúcar de Confeiteiro', price_modifier: 0.50, is_available: true, order_index: 4, max_quantity: 1 },
+      { id: `comp-5-${productId}`, name: 'Canela em Pó', price_modifier: 0.50, is_available: true, order_index: 5, max_quantity: 1 }
+    ]
+  }
+];
+
+// Customizações para bebidas
+const createDrinkCustomizationsForProduct = (productId: string) => [
+  {
+    id: `custom-opcoes-${productId}`,
+    product_id: productId,
+    name: 'Opções',
+    type: 'single' as const,
+    required: false,
+    max_selections: 1,
+    order_index: 1,
+    options: [
+      { id: `opt-1-${productId}`, name: 'Gelado', price_modifier: 0, is_available: true, order_index: 1, max_quantity: 1 },
+      { id: `opt-2-${productId}`, name: 'Natural', price_modifier: 0, is_available: true, order_index: 2, max_quantity: 1 },
+      { id: `opt-3-${productId}`, name: 'Com Gelo Extra', price_modifier: 0, is_available: true, order_index: 3, max_quantity: 1 }
+    ]
+  }
+];
+
 export const mockProducts: Product[] = [
+  // PASTÉIS SALGADOS - Todos com sistema completo de complementos
   {
     id: '1',
     name: 'Pastel de Carne',
@@ -67,7 +166,8 @@ export const mockProducts: Product[] = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     isPopular: true,
-    category: mockCategories[0]
+    category: mockCategories[0],
+    customizations: createCustomizationsForProduct('1')
   },
   {
     id: '2',
@@ -86,7 +186,8 @@ export const mockProducts: Product[] = [
     allergens: ['glúten', 'lactose'],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    category: mockCategories[0]
+    category: mockCategories[0],
+    customizations: createCustomizationsForProduct('2')
   },
   {
     id: '3',
@@ -107,7 +208,8 @@ export const mockProducts: Product[] = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     isNew: true,
-    category: mockCategories[0]
+    category: mockCategories[0],
+    customizations: createCustomizationsForProduct('3')
   },
   {
     id: '4',
@@ -126,8 +228,11 @@ export const mockProducts: Product[] = [
     allergens: ['glúten', 'crustáceos'],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    category: mockCategories[0]
+    category: mockCategories[0],
+    customizations: createCustomizationsForProduct('4')
   },
+  
+  // PASTÉIS DOCES - Com complementos específicos para doces
   {
     id: '5',
     name: 'Pastel de Chocolate',
@@ -145,7 +250,8 @@ export const mockProducts: Product[] = [
     allergens: ['glúten', 'lactose'],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    category: mockCategories[1]
+    category: mockCategories[1],
+    customizations: createSweetCustomizationsForProduct('5')
   },
   {
     id: '6',
@@ -164,8 +270,11 @@ export const mockProducts: Product[] = [
     allergens: ['glúten', 'lactose'],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    category: mockCategories[1]
+    category: mockCategories[1],
+    customizations: createSweetCustomizationsForProduct('6')
   },
+  
+  // BEBIDAS - Com opções simples de personalização
   {
     id: '7',
     name: 'Refrigerante Lata',
@@ -183,7 +292,8 @@ export const mockProducts: Product[] = [
     allergens: [],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    category: mockCategories[2]
+    category: mockCategories[2],
+    customizations: createDrinkCustomizationsForProduct('7')
   },
   {
     id: '8',
@@ -202,7 +312,8 @@ export const mockProducts: Product[] = [
     allergens: [],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    category: mockCategories[2]
+    category: mockCategories[2],
+    customizations: createDrinkCustomizationsForProduct('8')
   },
   {
     id: '9',
@@ -222,7 +333,10 @@ export const mockProducts: Product[] = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     category: mockCategories[2]
+    // Água não precisa de customizações
   },
+  
+  // COMBOS - Sem customizações (são produtos pré-definidos)
   {
     id: '10',
     name: 'Combo Tradicional',
@@ -243,6 +357,7 @@ export const mockProducts: Product[] = [
     updated_at: new Date().toISOString(),
     isPopular: true,
     category: mockCategories[3]
+    // Combos não têm customizações - são produtos fixos
   },
   {
     id: '11',
@@ -265,6 +380,7 @@ export const mockProducts: Product[] = [
     isPopular: true,
     isNew: true,
     category: mockCategories[3]
+    // Combos não têm customizações - são produtos fixos
   }
 ];
 

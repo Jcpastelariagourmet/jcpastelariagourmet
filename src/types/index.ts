@@ -22,7 +22,7 @@ export type {
   ProductGridProps,
   ProductModalProps,
   ProductCustomizerProps,
-  ProductFiltersProps as ComponentProductFilters,
+
   CartDrawerProps,
   CartItemProps,
   CartSummaryProps,

@@ -39,8 +39,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     onAddToCart(product, defaultOptions);
   };
 
-  const handleQuickView = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleQuickView = (e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
     onQuickView(product);
   };
 

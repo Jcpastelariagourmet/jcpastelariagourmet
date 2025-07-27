@@ -1,10 +1,15 @@
 'use client';
 
 import React from 'react';
+import { useSearchParams } from 'next/navigation';
 import { ProductCatalog } from '@/components/products';
+import { CategoryNavigation } from '@/components/categories';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { Container } from '@/components/layout/Container';
 import { useProducts, useProductSearch } from '@/hooks/useProducts';
 import { MainLayout } from '@/components/layout/MainLayout';
-import { Product, ProductOptions } from '@/types/database';
+import { Product } from '@/types/database';
+import { ProductOptions } from '@/types/components';
 
 // Mock cart functionality for demo
 const useCart = () => {
@@ -33,6 +38,9 @@ const useFavorites = () => {
 };
 
 export default function ProdutosPage() {
+  const searchParams = useSearchParams();
+  const categoryId = searchParams.get('categoria') || undefined;
+
   const {
     products,
     categories,
@@ -44,7 +52,8 @@ export default function ProdutosPage() {
     refresh
   } = useProducts({
     pageSize: 12,
-    enableInfiniteScroll: true
+    enableInfiniteScroll: true,
+    initialFilters: { categoryId }
   });
 
   const {
@@ -57,6 +66,12 @@ export default function ProdutosPage() {
 
   const { addToCart } = useCart();
   const { favoriteIds, toggleFavorite } = useFavorites();
+
+  // Find current category for breadcrumb
+  const currentCategory = React.useMemo(() => 
+    categoryId ? categories.find(cat => cat.id === categoryId) : undefined,
+    [categories, categoryId]
+  );
 
   // Handle product quick view
   const handleQuickView = (product: Product) => {
@@ -72,24 +87,22 @@ export default function ProdutosPage() {
     loadSuggestions(query);
   };
 
+  // Redirect to home page since menu is now there
+  React.useEffect(() => {
+    const params = new URLSearchParams();
+    if (categoryId) {
+      params.set('categoria', categoryId);
+    }
+    window.location.href = `/?${params.toString()}`;
+  }, [categoryId]);
+
   return (
     <MainLayout>
-      <div className="min-h-screen bg-gray-50 py-8">
-        <ProductCatalog
-          products={products}
-          categories={categories}
-          loading={loading}
-          hasMore={hasMore}
-          onLoadMore={loadMore}
-          onAddToCart={addToCart}
-          onQuickView={handleQuickView}
-          onFavoriteToggle={toggleFavorite}
-          favoriteProductIds={favoriteIds}
-          onSearch={handleSearch}
-          searchSuggestions={suggestions}
-          recentSearches={recentSearches}
-          trendingSearches={trendingSearches}
-        />
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin w-8 h-8 border-2 border-primary-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="text-gray-600">Redirecionando para o cardápio...</p>
+        </div>
       </div>
     </MainLayout>
   );

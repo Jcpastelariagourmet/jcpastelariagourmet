@@ -165,7 +165,7 @@ export interface ProductsApiEndpoints {
   getProducts: (params?: ProductsQueryParams) => Promise<PaginatedResponse<Product>>
   getProduct: (id: string) => Promise<ApiResponse<Product>>
   getCategories: () => Promise<ApiResponse<Category[]>>
-  searchProducts: (query: string, filters?: ProductFilters) => Promise<PaginatedResponse<Product>>
+  searchProducts: (query: string, filters?: { categoryId?: string }) => Promise<PaginatedResponse<Product>>
   getFeaturedProducts: () => Promise<ApiResponse<Product[]>>
   getPopularProducts: (limit?: number) => Promise<ApiResponse<Product[]>>
   getNewProducts: (limit?: number) => Promise<ApiResponse<Product[]>>
@@ -187,14 +187,7 @@ export interface ProductsQueryParams {
   isAvailable?: boolean
 }
 
-export interface ProductFilters {
-  categoryId?: string
-  priceRange?: [number, number]
-  rating?: number
-  preparationTime?: number
-  dietary?: string[]
-  allergens?: string[]
-}
+
 
 export interface Category {
   id: string

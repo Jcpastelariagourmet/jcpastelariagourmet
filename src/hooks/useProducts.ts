@@ -1,11 +1,15 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Product, Category } from '@/types/database';
 import { db, isSupabaseConfigured } from '@/lib/supabase';
-import { ProductFilters } from '@/components/products/ProductFilters';
 import { mockCategories, mockProducts, mockSearchSuggestions, mockRecentSearches, mockTrendingSearches } from '@/lib/mock-data';
 
+// Simplified filters interface
+export interface SimpleFilters {
+  categoryId?: string;
+}
+
 export interface UseProductsOptions {
-  initialFilters?: ProductFilters;
+  initialFilters?: SimpleFilters;
   pageSize?: number;
   enableInfiniteScroll?: boolean;
 }
@@ -17,9 +21,9 @@ export interface UseProductsReturn {
   error: string | null;
   hasMore: boolean;
   totalCount: number;
-  filters: ProductFilters;
+  filters: SimpleFilters;
   searchQuery: string;
-  setFilters: (filters: ProductFilters) => void;
+  setFilters: (filters: SimpleFilters) => void;
   setSearchQuery: (query: string) => void;
   loadMore: () => void;
   refresh: () => void;
@@ -28,7 +32,7 @@ export interface UseProductsReturn {
 
 export const useProducts = (options: UseProductsOptions = {}): UseProductsReturn => {
   const {
-    initialFilters = { sortBy: 'popularity', sortOrder: 'desc' },
+    initialFilters = {},
     pageSize = 20,
     enableInfiniteScroll = true
   } = options;
@@ -41,7 +45,7 @@ export const useProducts = (options: UseProductsOptions = {}): UseProductsReturn
   const [hasMore, setHasMore] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  const [filters, setFilters] = useState<ProductFilters>(initialFilters);
+  const [filters, setFilters] = useState<SimpleFilters>(initialFilters);
   const [searchQuery, setSearchQuery] = useState('');
 
   // Build query based on filters and search
@@ -65,44 +69,8 @@ export const useProducts = (options: UseProductsOptions = {}): UseProductsReturn
       query = query.eq('category_id', filters.categoryId);
     }
 
-    // Apply price range filter
-    if (filters.priceRange) {
-      const [min, max] = filters.priceRange;
-      query = query.gte('price', min).lte('price', max);
-    }
-
-    // Apply rating filter
-    if (filters.rating) {
-      query = query.gte('rating', filters.rating);
-    }
-
-    // Apply preparation time filter
-    if (filters.preparationTime) {
-      query = query.lte('preparation_time', filters.preparationTime);
-    }
-
-    // Apply sorting
-    if (filters.sortBy) {
-      const ascending = filters.sortOrder === 'asc';
-      
-      switch (filters.sortBy) {
-        case 'name':
-          query = query.order('name', { ascending });
-          break;
-        case 'price':
-          query = query.order('price', { ascending });
-          break;
-        case 'rating':
-          query = query.order('rating', { ascending, nullsFirst: false });
-          break;
-        case 'popularity':
-          query = query.order('orders_count', { ascending, nullsFirst: false });
-          break;
-        case 'newest':
-          query = query.order('created_at', { ascending });
-          break;
-      }
-    }
+    // Simple sorting by popularity
+    query = query.order('orders_count', { ascending: false, nullsFirst: false });
 
     // Apply pagination
     if (enableInfiniteScroll) {
@@ -184,66 +152,12 @@ export const useProducts = (options: UseProductsOptions = {}): UseProductsReturn
           filteredMockProducts = filteredMockProducts.filter(product => product.category_id === filters.categoryId);
         }
 
-        // Apply price range filter
-        if (filters.priceRange) {
-          const [min, max] = filters.priceRange;
-          filteredMockProducts = filteredMockProducts.filter(product => {
-            const price = product.discountedPrice || product.price;
-            return price >= min && price <= max;
-          });
-        }
-
-        // Apply rating filter
-        if (filters.rating) {
-          filteredMockProducts = filteredMockProducts.filter(product => 
-            product.rating && product.rating >= filters.rating!
-          );
-        }
-
-        // Apply preparation time filter
-        if (filters.preparationTime) {
-          filteredMockProducts = filteredMockProducts.filter(product => 
-            product.preparation_time && product.preparation_time <= filters.preparationTime!
-          );
-        }
-
-        // Apply sorting
-        if (filters.sortBy) {
-          filteredMockProducts.sort((a, b) => {
-            let aValue: any, bValue: any;
-
-            switch (filters.sortBy) {
-              case 'name':
-                aValue = a.name.toLowerCase();
-                bValue = b.name.toLowerCase();
-                break;
-              case 'price':
-                aValue = a.discountedPrice || a.price;
-                bValue = b.discountedPrice || b.price;
-                break;
-              case 'rating':
-                aValue = a.rating || 0;
-                bValue = b.rating || 0;
-                break;
-              case 'popularity':
-                aValue = a.orders_count || 0;
-                bValue = b.orders_count || 0;
-                break;
-              case 'newest':
-                aValue = new Date(a.created_at || 0).getTime();
-                bValue = new Date(b.created_at || 0).getTime();
-                break;
-              default:
-                return 0;
-            }
-
-            if (filters.sortOrder === 'asc') {
-              return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
-            } else {
-              return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
-            }
-          });
-        }
+        // Simple sorting by popularity
+        filteredMockProducts.sort((a, b) => {
+          const aValue = a.orders_count || 0;
+          const bValue = b.orders_count || 0;
+          return bValue - aValue; // desc order
+        });
 
         // Simulate pagination
         const startIndex = page * pageSize;
@@ -323,13 +237,13 @@ export const useProducts = (options: UseProductsOptions = {}): UseProductsReturn
 
   // Reset filters
   const resetFilters = useCallback(() => {
-    setFilters(initialFilters);
+    setFilters({});
     setSearchQuery('');
     setCurrentPage(0);
-  }, [initialFilters]);
+  }, []);
 
   // Update filters
-  const updateFilters = useCallback((newFilters: ProductFilters) => {
+  const updateFilters = useCallback((newFilters: SimpleFilters) => {
     setFilters(newFilters);
     setCurrentPage(0);
   }, []);

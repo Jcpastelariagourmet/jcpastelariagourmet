@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from 'next-themes';
 import { AuthProvider } from '@/hooks/useAuthContext';
+import { CartProvider } from '@/components/cart';
 
 // Configuração do React Query
 const queryClient = new QueryClient({
@@ -34,7 +35,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
         disableTransitionOnChange={false}
       >
         <AuthProvider>
-          {children}
+          <CartProvider>
+            {children}
+          </CartProvider>
           
           {/* Toast notifications */}
           <Toaster

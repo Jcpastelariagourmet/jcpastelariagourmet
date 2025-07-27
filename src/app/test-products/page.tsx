@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ProductCard, ProductGrid, ProductFilters, ProductSearch } from '@/components/products';
+import { ProductCard, ProductGrid, ProductSearch } from '@/components/products';
 import { Product, Category, ProductOptions } from '@/types/database';
 
 // Mock data for testing
@@ -177,12 +177,9 @@ export default function TestProductsPage() {
         {/* Filters */}
         <div className="max-w-sm">
           <h2 className="text-xl font-semibold mb-4">Filtros</h2>
-          <ProductFilters
-            categories={mockCategories}
-            filters={filters}
-            onFiltersChange={setFilters}
-            onReset={() => setFilters({ sortBy: 'popularity', sortOrder: 'desc' })}
-          />
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <p className="text-sm text-gray-600">ProductFilters removido - interface simplificada</p>
+          </div>
         </div>
       </div>
     </div>

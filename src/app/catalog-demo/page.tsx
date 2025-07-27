@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { ProductCatalog } from '@/components/products/ProductCatalog';
 import { useProducts, useProductSearch } from '@/hooks/useProducts';
-import { Product, ProductOptions } from '@/types/database';
+import { Product } from '@/types/database';
+import { ProductOptions } from '@/types/components';
 import { PageContainer } from '@/components/layout/Container';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -128,7 +129,7 @@ export default function CatalogDemoPage() {
             <strong>Favorites:</strong> {favoriteProductIds.length}
           </div>
           <div>
-            <strong>Sort:</strong> {filters.sortBy} ({filters.sortOrder})
+            <strong>Category:</strong> {filters.categoryId || 'All'}
           </div>
         </div>
         

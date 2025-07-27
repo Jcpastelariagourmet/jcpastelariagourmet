@@ -83,6 +83,7 @@ export interface ProductCustomization extends DbProductCustomization {
 
 export interface CustomizationOption extends DbCustomizationOption {
   customization?: ProductCustomization
+  max_quantity?: number // Limite máximo de quantidade para este item específico
 }
 
 export interface Address extends DbAddress {

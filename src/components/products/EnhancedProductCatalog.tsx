@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { Product, Category, ProductOptions } from '@/types/database';
 import { ProductGrid } from './ProductGrid';
 import { VirtualProductGrid } from './VirtualProductGrid';
-import { ProductFilters, ProductFilters as ProductFiltersType } from './ProductFilters';
+// ProductFilters removed - using simple filters
 import { ProductSearch, SearchSuggestion } from './ProductSearch';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -48,10 +48,7 @@ export const EnhancedProductCatalog: React.FC<EnhancedProductCatalogProps> = ({
   className
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [filters, setFilters] = useState<ProductFiltersType>({
-    sortBy: 'popularity',
-    sortOrder: 'desc'
-  });
+  const [filters, setFilters] = useState<{ categoryId?: string }>({});
   const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [performanceMetrics, setPerformanceMetrics] = useState({
@@ -180,7 +177,7 @@ export const EnhancedProductCatalog: React.FC<EnhancedProductCatalogProps> = ({
   }, [onSearch, measurePerformance]);
 
   // Handle filter changes with performance tracking
-  const handleFiltersChange = useCallback((newFilters: ProductFiltersType) => {
+  const handleFiltersChange = useCallback((newFilters: { categoryId?: string }) => {
     measurePerformance('filter', () => {
       setFilters(newFilters);
     });
@@ -276,14 +273,10 @@ export const EnhancedProductCatalog: React.FC<EnhancedProductCatalogProps> = ({
             'lg:w-80 lg:flex-shrink-0',
             showFilters ? 'block' : 'hidden lg:block'
           )}>
-            <ProductFilters
-              categories={categories}
-              filters={filters}
-              onFiltersChange={handleFiltersChange}
-              onReset={handleResetFilters}
-              isOpen={showFilters}
-              onToggle={() => setShowFilters(!showFilters)}
-            />
+            {/* ProductFilters removed - simplified interface */}
+            <div className="p-4 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-600">Filtros avançados removidos para simplificar a experiência</p>
+            </div>
           </div>
 
           {/* Main Content */}

@@ -137,12 +137,7 @@ export interface ProductCustomizerProps extends BaseComponentProps {
   onPriceCalculate: (price: number) => void
 }
 
-export interface ProductFiltersProps extends BaseComponentProps {
-  categories: Category[]
-  filters: ProductFilters
-  onFiltersChange: (filters: ProductFilters) => void
-  onReset: () => void
-}
+
 
 // Cart component types
 export interface CartDrawerProps extends BaseComponentProps {
@@ -336,7 +331,9 @@ export interface ProductOptions {
 
 export interface SelectedCustomization {
   customizationId: string
+  customizationName?: string
   optionIds: string[]
+  optionNames: string[]
 }
 
 export interface CartItem {
@@ -354,16 +351,7 @@ export interface AppliedCoupon {
   appliedAt: string
 }
 
-export interface ProductFilters {
-  categoryId?: string
-  priceRange?: [number, number]
-  rating?: number
-  preparationTime?: number
-  dietary?: string[]
-  search?: string
-  sortBy?: 'name' | 'price' | 'rating' | 'popularity' | 'newest'
-  sortOrder?: 'asc' | 'desc'
-}
+
 
 export interface OrderFilters {
   status?: Order['status'][]

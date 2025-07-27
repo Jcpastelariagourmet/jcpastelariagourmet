@@ -20,7 +20,7 @@ export const APP_CONFIG = {
 export const DELIVERY_CONFIG = {
   freeDeliveryMinimum: 30.00,
   deliveryFee: 5.99,
-  maxDeliveryDistance: 10, // km
+  maxDeliveryDistance: 10,
   estimatedDeliveryTime: {
     min: 30,
     max: 60
@@ -37,7 +37,7 @@ export const DELIVERY_CONFIG = {
 };
 
 export const GAMIFICATION_CONFIG = {
-  pointsPerReal: 10, // 10 pontos por R$ 1,00 gasto
+  pointsPerReal: 10,
   levels: {
     bronze: { min: 0, max: 999, name: 'Bronze', color: '#CD7F32', benefits: [] },
     silver: { min: 1000, max: 2999, name: 'Prata', color: '#C0C0C0', benefits: ['5% desconto'] },
