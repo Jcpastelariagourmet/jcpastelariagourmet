@@ -49,8 +49,8 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
         className
       )}
       style={{
-        borderColor: featured ? category.color : undefined,
-        backgroundColor: featured ? `${category.color}10` : undefined
+        borderColor: featured ? (category.color || undefined) : undefined,
+        backgroundColor: featured ? `${category.color || '#000000'}10` : undefined
       }}
     >
       {/* Featured Badge */}
