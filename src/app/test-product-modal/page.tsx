@@ -20,6 +20,9 @@ if (!mockProduct) {
   throw new Error('Mock product not found');
 }
 
+// Ensure mockProduct is defined for TypeScript
+const product = mockProduct;
+
 const mockSizes: ProductSize[] = [
   {
     id: 'size-small',
@@ -180,7 +183,7 @@ export default function TestProductModalPage() {
               Card do Produto
             </h2>
             <ProductCard
-              product={mockProduct}
+              product={product}
               onAddToCart={handleAddToCart}
               onQuickView={handleQuickView}
               onFavoriteToggle={handleFavoriteToggle}
@@ -235,14 +238,14 @@ export default function TestProductModalPage() {
 
         {/* Product Modal */}
         <ProductModal
-          product={mockProduct}
+          product={product}
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onAddToCart={handleAddToCart}
           onFavoriteToggle={handleFavoriteToggle}
           isFavorite={isFavorite}
           sizes={mockSizes}
-          customizations={mockProduct.customizations || []}
+          customizations={product.customizations || []}
           reviews={mockReviews}
         />
       </div>

@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { ProductCard, ProductGrid, ProductSearch } from '@/components/products';
-import { Product, Category, ProductOptions } from '@/types/database';
+import { Product, Category } from '@/types/database';
+import { ProductOptions } from '@/types/components';
 
 // Mock data for testing
 const mockCategories: Category[] = [
@@ -154,7 +155,7 @@ export default function TestProductsPage() {
           <h2 className="text-xl font-semibold mb-4">Card de Produto</h2>
           <div className="max-w-sm">
             <ProductCard
-              product={mockProducts[0]}
+              product={mockProducts[0]!}
               onAddToCart={handleAddToCart}
               onQuickView={handleQuickView}
               onFavoriteToggle={handleFavoriteToggle}

@@ -5,11 +5,12 @@ import { SimpleProductModal } from '@/components/products/SimpleProductModal';
 import { ProductCard } from '@/components/products/ProductCard';
 import { Button } from '@/components/ui/Button';
 import { mockProducts } from '@/lib/mock-data';
-import { Product, ProductOptions } from '@/types/database';
+import { Product } from '@/types/database';
+import { ProductOptions } from '@/types/components';
 
 export default function TestSimpleModalPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product>(mockProducts[0]);
+  const [selectedProduct, setSelectedProduct] = useState<Product>(mockProducts[0]!);
 
   // Mock função adicionar ao carrinho
   const handleAddToCart = (product: Product, options: ProductOptions) => {
@@ -85,7 +86,7 @@ export default function TestSimpleModalPage() {
           <Button
             variant="outline"
             size="lg"
-            onClick={() => openModal(mockProducts[0])}
+            onClick={() => openModal(mockProducts[0]!)}
             className="mb-4"
           >
             🍽️ Abrir Modal - Pastel de Carne (com complementos)
